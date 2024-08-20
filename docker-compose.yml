@@ -1,0 +1,123 @@
+version: '3.9'
+
+volumes:
+  datastore:
+
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      target: local
+    container_name: nginx_docker
+    volumes:
+      - type: bind
+        source: .
+        target: /home
+    ports:
+      - 80:80
+    environment:
+      PHP_HOST: php_docker
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: development
+    container_name: php_docker
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: .
+        target: /home
+
+  php74:
+    build:
+      context: .
+      dockerfile: ./docker/php/DockerfilePhp74
+      target: development
+    container_name: php_docker_74
+    ports:
+      - 4000:4000
+    volumes:
+      - type: bind
+        source: .
+        target: /home
+
+  php56:
+    build:
+      context: .
+      dockerfile: ./docker/php/DockerfilePhp56
+      target: development
+    container_name: php_docker_56
+    ports:
+      - 5000:5000
+    volumes:
+      - type: bind
+        source: .
+        target: /home
+
+  queue:
+    build:
+      context: .
+      dockerfile: ./docker/queue/Dockerfile
+      target: development
+    container_name: queue_docker
+    volumes:
+      - type: bind
+        source: .
+        target: /home
+
+  mariadb:
+    build:
+      context: .
+      dockerfile: ./docker/mariadb/Dockerfile
+    container_name: mariadb_docker
+    ports:
+      - 306:3306
+    volumes:
+      - datastore:/var/lib/mysql
+      - type: bind
+        source: ./databases
+        target: /home
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: finale
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+
+  pma:
+    build:
+      context: .
+      dockerfile: ./docker/pma/Dockerfile
+      target: builder
+    container_name: phpmyadmin_docker
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mariadb_docker
+      - PMA_USER=root
+      - PMA_PASSWORD=rootpw
+
+  mail:
+    image: mailhog/mailhog
+    container_name: mail_docker
+    ports:
+      - 8025:8025
+      - 1025:1025
+  # Only restore comment out when using
+  # ngrok:
+  #   image: wernight/ngrok
+  #   container_name: ngrok_docker
+  #   ports:
+  #     - 4040:4040
+  #   environment:
+  #     NGROK_AUTH: ${NGROK_AUTH}
+  #     NGROK_PROTOCOL: http
+  #     NGROK_PORT: nginx_docker:80

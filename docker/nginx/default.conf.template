@@ -1,0 +1,165 @@
+server {
+    listen 80;
+    server_name localhost;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            ${PHP_HOST}:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
+
+server {
+    listen 80;
+    server_name finale.local;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home/finale/public/;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            ${PHP_HOST}:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
+server {
+    listen 80;
+    server_name hitmake.local;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home/hitmake/public/;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            php_docker_74:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
+
+server {
+    listen 80;
+    server_name paslog.local;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home/paslog/public/;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            php_docker_56:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
+
+server {
+    listen 80;
+    server_name collabo-n.local;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home/collabo/public/;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            php_docker_74:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
+server {
+    listen 80;
+    server_name enjoy-kb.local;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    client_max_body_size 20M;
+    root /home/enjoy-kb.net_laravel/public/;
+    charset     utf-8;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location / {
+        try_files $uri /index.php?$query_string;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass            php_docker_74:9000;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_index           index.php;
+        fastcgi_param           SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param           PATH_INFO        $fastcgi_path_info;
+        fastcgi_param           REQUEST_FILENAME $request_filename;
+        include                 fastcgi_params;
+    }
+}
